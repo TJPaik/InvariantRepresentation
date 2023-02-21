@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+models
+preprocessed
+results
+anim.pth
+figures
