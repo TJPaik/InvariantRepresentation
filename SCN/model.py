@@ -9,12 +9,12 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.register_buffer("EI", edge_indices)
 
-        self.conv1 = nn.Conv1d(1, 64, kernel_size=5, stride=2, bias=True)
-        self.conv2 = nn.Conv1d(64, 128, kernel_size=5, stride=2, bias=True)
-        self.conv3 = nn.Conv1d(128, 256, kernel_size=5, stride=2, bias=True)
-        self.gconv1 = SGConv(256, 256, 39, cached=False, add_self_loops=True)
-        self.gconv2 = SGConv(256, 256, 39, cached=False, add_self_loops=True)
-        self.linear = nn.Linear(256, 2)
+        self.conv1 = nn.Conv1d(1, 128, kernel_size=5, stride=2, bias=True)
+        self.conv2 = nn.Conv1d(128, 128, kernel_size=5, stride=2, bias=True)
+        self.conv3 = nn.Conv1d(128, 128, kernel_size=5, stride=2, bias=True)
+        self.gconv1 = SGConv(128, 128, 39, cached=False, add_self_loops=True)
+        self.gconv2 = SGConv(128, 128, 39, cached=False, add_self_loops=True)
+        self.linear = nn.Linear(128, 2)
 
         self.batch_edges = torch.Tensor
         self.n_batch = 0

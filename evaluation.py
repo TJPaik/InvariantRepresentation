@@ -20,14 +20,16 @@ if __name__ == '__main__':
     stds2 = torch.mean(diff_from_mean2, dim=[1, 2, 3])
     print(stds1, stds2)
 
+    plt.rcParams['font.size'] = 20
     _, labels = torch.load('anim.pth')
     for i in range(3):
-        plt.figure(figsize=(4, 4))
+        plt.figure(figsize=(7, 7))
         for el in np.unique(labels):
-            plt.scatter(*(results1[-1][0][i][el == labels]).T, label=el, s=15)
+            plt.scatter(*(results1[-1][0][i][el == labels]).T, label=el, s=70)
         plt.legend()
         plt.xticks([])
         plt.yticks([])
         plt.tight_layout()
         plt.savefig(f"figures/512_10_trial_{i}.svg")
+        plt.show()
         plt.close()

@@ -1,3 +1,5 @@
+import argparse
+
 import numpy as np
 import torch
 from torch import nn, optim
@@ -9,17 +11,19 @@ from mesh_lib import icosphere
 from mesh_lib import triangles2edges
 
 device = 'cuda'
-SUBDIVISION_LEVEL = 7
-N_BINS = 512
-RANDOM_TIMES = 10
-N_SAMPLES_FOR_TRAINING = 5
-N_EPOCHS = 400
-N_BATCH = 16
-TRAINING_TIMES = 8
-INITIAL_RANDOM_SEED = 42
 
 
-def train(trial_n):
+def train(trial_n, args):
+    SUBDIVISION_LEVEL = args.subdivision_level
+    N_BINS = args.n_bins
+    RANDOM_TIMES = args.random_times
+    N_SAMPLES_FOR_TRAINING = args.n_samples_for_training
+    N_EPOCHS = args.n_epochs
+    N_BATCH = args.n_batch
+    INITIAL_RANDOM_SEED = args.initial_random_seed
+    print(trial_n, SUBDIVISION_LEVEL, N_BINS, RANDOM_TIMES, N_SAMPLES_FOR_TRAINING, N_EPOCHS, N_BATCH,
+          INITIAL_RANDOM_SEED)
+
     # Preparation of training data
     euler_data = torch.load(f'preprocessed/8.0_{N_BINS}_{SUBDIVISION_LEVEL}_42_without_transform.pth')
     _, labels = torch.load('anim.pth')
@@ -81,6 +85,24 @@ def train(trial_n):
     torch.save(output, f'results/8.0_{N_BINS}_{SUBDIVISION_LEVEL}_42_{trial_n}.pth')
 
 
+def get_args():
+    parser = argparse.ArgumentParser(description='Train a model with ANIM dataset.',
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument('--subdivision_level', dest='subdivision_level', type=int)
+    parser.add_argument('--n_bins', dest='n_bins', type=int)
+    parser.add_argument('--random_times', dest='random_times', type=int, default=10)
+    parser.add_argument('--n_samples_for_training', dest='n_samples_for_training', type=int, default=5)
+    parser.add_argument('--n_epochs', dest='n_epochs', type=int, default=400)
+    parser.add_argument('--n_batch', dest='n_batch', type=int, default=16)
+    parser.add_argument('--training_times', dest='training_times', type=int, default=8)
+    parser.add_argument('--initial_random_seed', dest='initial_random_seed', type=int, default=42)
+
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
+    args = get_args()
+    TRAINING_TIMES = args.training_times
     for t in range(TRAINING_TIMES):
-        train(t)
+        train(t, args)
