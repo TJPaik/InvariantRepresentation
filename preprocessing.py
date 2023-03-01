@@ -14,7 +14,7 @@ from mesh_lib import process
 RANGE = 8.0
 N_BINS = 512
 SUBDIVISION_LEVEL = 7
-RANDOM_TIMES = 10
+RANDOM_TIMES = 1
 INITIAL_RANDOM_SEED = 42
 
 data_torch_path = 'anim.pth'
