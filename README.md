@@ -53,7 +53,7 @@ It trains a model and save the result in the folder `results`.
 ### Results:
 You can run the file `evaluation_single.py` to see the results.
 
-For the paper, I conducted the experiment using varied configurations and performed it 10 times by setting RANDOM_TIMES==10.
+For the paper, I conducted the experiment using varied configurations and performed it 10 times by setting `RANDOM_TIMES`=10.
 To produce the results in the paper, I use the file `evaluation.py`.
 
 ## References
